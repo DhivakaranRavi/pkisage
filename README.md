@@ -1,5 +1,15 @@
 # pkisage
 
+```text
+         _    _     _
+  _ __  | | _(_)___  __ _  __ _  ___
+ | '_ \ | |/ / / __|/ _` |/ _` |/ _ \
+ | |_) ||   <| \__ \ (_| | (_| |  __/
+ | .__/ |_|\_\_|___/\__,_|\__, |\___|
+ |_|                      |___/
+   read-only PKI diagnostics, migration checks & ticket triage
+```
+
 A read-only helper for PKI operations teams. It checks certificate requests before they reach a CA, predicts which apps break in a CA migration, translates CA errors and logs into causes and fixes, and diagnoses support tickets (including in Jira) with verifiable evidence. AI is used only to classify and to word replies; deterministic checks decide the facts and a human approves anything customer-facing.
 
 > **Status: alpha (0.1.0).** Not production-hardened. It is not a CA and never changes a CA.
