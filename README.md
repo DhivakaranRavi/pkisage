@@ -37,14 +37,14 @@ pkisage serve                                             # REST API (pip instal
 | Area | Status |
 |---|---|
 | Preflight (10 rules), chain, OCSP, parsing | Tested; OCSP and chain also run live against github.com and microsoft.com; `cert` cross-checked with `openssl` and `step certificate inspect` |
-| Error library | 19 entries; **6 verified against real CAs** (step-ca, Pebble), 13 unverified. Output labels each. |
-| Lab | Podman lab with **step-ca** and **Pebble** (not EJBCA). `lab/bench.py`: step-ca rejected 1 of 12 CSR variants and preflight flagged it; preflight also flagged 5 that step-ca accepts because the example `corp-web` policy is stricter. |
+| Error library | 25 entries; **12 verified against real CAs** (step-ca, Pebble, EJBCA CE), 13 unverified. Output labels each. See [lab findings](docs/lab-findings.md). |
+| Lab | Podman lab with **step-ca**, **Pebble** and **EJBCA CE** (default profiles; EJBCA's default accepted even RSA 512). `lab/bench.py`: step-ca rejected 1 of 12 CSR variants and preflight flagged it; preflight also flagged 5 that step-ca accepts because the example `corp-web` policy is stricter. |
 | Classifier | See [docs/eval.md](docs/eval.md): on two frozen held-out sets (46 documentation strings, 44 real GitHub issue titles; each run once), Jev scored 71.7% and 81.8%, rules 63.0% and 59.1%. Pooled N=90: Jev 76.7% (95% CI 66.9-84.2) vs rules 61.1% (50.8-70.5); intervals overlap slightly, so the advantage is suggestive only. Development-set scores (98% / 86%) are optimistic and not the headline. Labels were assigned by the author's AI assistant, unreviewed ([labeling rules](docs/labeling.md)). Auto-routing is **off by default** (3 of 27 high-confidence results were wrong); set `PKISAGE_TRUST_AUTO=1` to enable. |
 | Migration | Demonstrated on generated sample CSRs only. |
 | Jira | Triage and ticket enrichment (label + comment). No SLA/KPI tracking. Tested live on a personal Jira site and with a mocked Jira in the test suite. |
 | CA adapters | ACME and step-ca verified in the lab. DigiCert and EJBCA clients are read-only and tested against fake servers only; `enroll-check` is derived from public docs. |
-| Local model | Works end to end with Ollama (rule-based triage + local reply). A 0.5B model failed citation validation, so the template fallback was used. |
-| RHEL | Install and core commands tested on Rocky Linux 9.8. systemd timer files are untested. |
+| Local model | Works end to end with Ollama and no hosted API. A 0.5B model failed citation validation (template fallback used); **`qwen2.5:7b` passed 3 of 3 runs** with JSON mode. Classification locally is rule-based only. |
+| RHEL | Install and core commands tested on Rocky Linux 9.8; systemd units pass `systemd-analyze verify` and the service command exported 146 certificates there. The timer itself was not run under a live systemd. |
 
 ## AI safeguards
 Redaction before any external call (tested); suspected prompt injection is never auto-routed; replies must cite numbered facts and uncited/unsupported sentences are dropped (template fallback); Jev pinned to `jev-1.13.0`; results cached (`PKISAGE_NO_CACHE=1` to disable); Jira writes need `--post`; only http(s) URLs are opened; production adapters are GET-only. Details: [SECURITY.md](SECURITY.md), [docs/threat-model.md](docs/threat-model.md).
@@ -60,10 +60,10 @@ Redaction before any external call (tested); suspected prompt injection is never
 | Runbook (KB) drafting | Certificate lifecycle management (by design, read-only) |
 
 ## Docs
-[Profiles](docs/profiles.md) | [Error entries](docs/error-entries.md) | [Verifying entries](docs/verifying-entries.md) | [Evaluation](docs/eval.md) | [Threat model](docs/threat-model.md) | [RHEL](docs/rhel.md) | [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md)
+[Profiles](docs/profiles.md) | [Error entries](docs/error-entries.md) | [Verifying entries](docs/verifying-entries.md) | [Evaluation](docs/eval.md) | [Labeling](docs/labeling.md) | [Lab findings](docs/lab-findings.md) | [Threat model](docs/threat-model.md) | [RHEL](docs/rhel.md) | [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md)
 
 ## Lab
-`lab/up.sh` (Pebble ACME test CA), `lab/stepca-up.sh` (step-ca in podman; run `podman machine start` first), `lab/bench.py`. Lab CAs are for testing only (default settings, lab password, `--insecure` TLS); enterprises should test against a production-like non-production CA.
+`lab/up.sh` (Pebble ACME test CA), `lab/stepca-up.sh` (step-ca in podman; run `podman machine start` first), `lab/ejbca-up.sh` (EJBCA CE; needs `podman machine set --memory 6144`), `lab/bench.py`. Lab CAs are for testing only (default settings, lab password, `--insecure` TLS); enterprises should test against a production-like non-production CA.
 
 ## License
 Apache-2.0. See [LICENSE](LICENSE).

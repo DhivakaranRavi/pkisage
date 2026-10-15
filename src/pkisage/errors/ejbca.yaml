@@ -29,3 +29,42 @@
   category: AUTH_FAILED
   cause: The client credential or role lacks access to the profile or CA.
   fix: Check the client certificate / API token and role access rules.
+
+# Verified against EJBCA Community Edition container keyfactor/ejbca-ce:latest (image 45aad12c3009, 2026-10-14)
+# using `ejbca.sh ra addendentity` / `ejbca.sh createcert`. Messages are from the EJBCA CLI.
+- id: ejbca-wrong-credentials
+  pattern: "Wrong username or password"
+  category: AUTH_FAILED
+  cause: The end entity's enrollment password does not match (or the user is unknown to the CA).
+  fix: Use the enrollment password set for the end entity, or reset it in the RA.
+  verified_against: "ejbca-ce:latest@sha256:45aad12c3009 (2026-10-14)"
+- id: ejbca-user-not-found
+  pattern: "Could not find username, and hence no CA for user"
+  category: AUTH_FAILED
+  cause: The end entity does not exist in the CA database.
+  fix: Create the end entity first (ra addendentity or the RA web) or correct the username.
+  verified_against: "ejbca-ce:latest@sha256:45aad12c3009 (2026-10-14)"
+- id: ejbca-status-not-new
+  pattern: "Got request with status \\w+ \\(\\d+\\)\\. Status NEW, FAILED or INPROCESS required"
+  category: UNKNOWN
+  cause: The end entity already received a certificate (status GENERATED), so a new request is refused.
+  fix: Set the end entity status back to NEW (or enable "allow multiple requests") before re-enrolling.
+  verified_against: "ejbca-ce:latest@sha256:45aad12c3009 (2026-10-14)"
+- id: ejbca-not-pkcs10
+  pattern: "is not a PKCS#10 request"
+  category: UNKNOWN
+  cause: The submitted file is not a valid PKCS#10 certificate request.
+  fix: Regenerate the CSR (openssl req -new ...) and submit the PEM file.
+  verified_against: "ejbca-ce:latest@sha256:45aad12c3009 (2026-10-14)"
+- id: ejbca-unknown-ca
+  pattern: "Could not find CA '[^']+' in database"
+  category: UNKNOWN
+  cause: The named CA does not exist or the caller cannot see it.
+  fix: Check the CA name (ca listcas) and the caller's CA access rules.
+  verified_against: "ejbca-ce:latest@sha256:45aad12c3009 (2026-10-14)"
+- id: ejbca-duplicate-user
+  pattern: "User '[^']+' already exists in the database"
+  category: UNKNOWN
+  cause: An end entity with this username already exists.
+  fix: Use a different username or edit the existing end entity.
+  verified_against: "ejbca-ce:latest@sha256:45aad12c3009 (2026-10-14)"

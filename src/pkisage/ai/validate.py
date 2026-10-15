@@ -24,13 +24,23 @@ def unsupported_in_reply(reply: str, facts: str) -> list[str]:
 
 
 def extract_json(text: str) -> object | None:
+    """Parse a JSON array, or an object holding a list under 'sentences'. Tolerates code fences."""
     import json
 
-    m = re.search(r"\[.*\]", text, re.DOTALL)
-    try:
-        return json.loads(m.group(0)) if m else None
-    except ValueError:
-        return None
+    cleaned = re.sub(r"```(?:json)?", "", text)
+    for pat in (r"\{.*\}", r"\[.*\]"):
+        m = re.search(pat, cleaned, re.DOTALL)
+        if not m:
+            continue
+        try:
+            val = json.loads(m.group(0))
+        except ValueError:
+            continue
+        if isinstance(val, dict):
+            val = val.get("sentences")
+        if isinstance(val, list):
+            return val
+    return None
 
 
 def facts_from_report(report: DiagnosisReport) -> list[str]:
@@ -49,13 +59,13 @@ def cited_reply(llm: Provider, report: DiagnosisReport) -> tuple[str, list[str],
     facts = facts_from_report(report)
     numbered = "\n".join(f"{i}: {f}" for i, f in enumerate(facts, 1))
     prompt = (
-        "Write a short polite customer reply as a JSON array of objects "
-        '{"text": "<one sentence>", "cites": [<fact numbers>]}. Every sentence must cite the '
+        'Write a short polite customer reply as JSON: {"sentences": [{"text": "<one sentence>", '
+        '"cites": [<fact numbers>]}]}. Every sentence must cite the '
         "numbered facts it relies on. Use ONLY these facts. Do NOT claim any action was already "
         "taken; only tell the customer what to do. Output JSON only.\n"
         f"<untrusted>\n{numbered}\n</untrusted>"
     )
-    raw = llm.complete(prompt)
+    raw = llm.complete(prompt, json_mode=True)
     parsed = extract_json(raw)
     if not isinstance(parsed, list):
         return raw, [], False

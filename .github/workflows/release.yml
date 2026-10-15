@@ -1,4 +1,5 @@
-# Untested template: PyPI trusted publishing + Sigstore signing + CycloneDX SBOM.
+# The build, `twine check` and CycloneDX steps were run locally; the publish and Sigstore steps
+# are UNTESTED (they need a PyPI trusted publisher and a tag). Try a TestPyPI release first.
 # Configure the PyPI "trusted publisher" for this repository before the first tag.
 name: release
 on:

@@ -34,5 +34,41 @@
   "text": "failed to decrypt JWE: invalid password",
   "category": "AUTH_FAILED",
   "source": "step-ca-latest"
+ },
+ {
+  "ca": "ejbca",
+  "text": "Could not create certificate: Wrong username or password",
+  "category": "AUTH_FAILED",
+  "source": "ejbca-ce:latest 45aad12c3009"
+ },
+ {
+  "ca": "ejbca",
+  "text": "Could not create certificate: Could not find username, and hence no CA for user 'nobody'.",
+  "category": "AUTH_FAILED",
+  "source": "ejbca-ce:latest 45aad12c3009"
+ },
+ {
+  "ca": "ejbca",
+  "text": "Could not create certificate: Got request with status GENERATED (40). Status NEW, FAILED or INPROCESS required: u_good.",
+  "category": "UNKNOWN",
+  "source": "ejbca-ce:latest 45aad12c3009"
+ },
+ {
+  "ca": "ejbca",
+  "text": "Input file '/tmp/bad.csr' is not a PKCS#10 request.",
+  "category": "UNKNOWN",
+  "source": "ejbca-ce:latest 45aad12c3009"
+ },
+ {
+  "ca": "ejbca",
+  "text": "Could not find CA 'NoSuchCA' in database.",
+  "category": "UNKNOWN",
+  "source": "ejbca-ce:latest 45aad12c3009"
+ },
+ {
+  "ca": "ejbca",
+  "text": "ERROR: User 'u_good' already exists in the database.",
+  "category": "UNKNOWN",
+  "source": "ejbca-ce:latest 45aad12c3009"
  }
 ]

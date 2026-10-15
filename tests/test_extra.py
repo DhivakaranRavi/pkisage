@@ -20,7 +20,7 @@ class FakeLLM:
     def __init__(self, out: str) -> None:
         self.out = out
 
-    def complete(self, prompt: str) -> str:
+    def complete(self, prompt: str, json_mode: bool = False) -> str:
         return self.out
 
 
@@ -194,3 +194,11 @@ def test_second_heldout_is_frozen() -> None:
     from pkisage.ai.evaluate import verify_lock
 
     verify_lock(Path(__file__).parent / "data" / "heldout2.jsonl")
+
+
+def test_extract_json_variants() -> None:
+    from pkisage.ai.validate import extract_json
+
+    assert extract_json('{"sentences": [{"text": "a", "cites": [1]}]}') == [{"text": "a", "cites": [1]}]
+    assert extract_json('```json\n[{"text": "a", "cites": [1]}]\n```') == [{"text": "a", "cites": [1]}]
+    assert extract_json("not json") is None

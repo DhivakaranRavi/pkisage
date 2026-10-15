@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import http.server
 import socketserver
+import warnings
 from collections.abc import Iterable
 from pathlib import Path
 
 from cryptography import x509
+from cryptography.utils import CryptographyDeprecationWarning
 
 from .checks.parse import load_cert_obj, now, parse_cert
 
@@ -27,11 +29,13 @@ def _certs_in(paths: Iterable[Path]) -> list[tuple[Path, x509.Certificate]]:
     for f in files:
         data = f.read_bytes()
         try:
-            certs = (
-                x509.load_pem_x509_certificates(data)
-                if b"-----BEGIN CERT" in data
-                else [load_cert_obj(data)]
-            )
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", CryptographyDeprecationWarning)
+                certs = (
+                    x509.load_pem_x509_certificates(data)
+                    if b"-----BEGIN CERT" in data
+                    else [load_cert_obj(data)]
+                )
         except ValueError:
             continue
         out += [(f, c) for c in certs]

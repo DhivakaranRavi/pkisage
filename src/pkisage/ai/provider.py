@@ -14,7 +14,7 @@ LOW = 0.5
 class Provider(Protocol):
     """Pluggable text-only LLM provider; never used for decisions."""
 
-    def complete(self, prompt: str) -> str: ...
+    def complete(self, prompt: str, json_mode: bool = False) -> str: ...
 
 
 class DecisionModel(Protocol):
