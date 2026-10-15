@@ -1,6 +1,6 @@
 # Showcase guide
 
-## 3-minute walkthrough (for a reviewer or interviewer)
+## 3-minute walkthrough
 Run `./demo.sh` (about 3 minutes; `./demo.sh --quick` is the 1-minute migration story). It is narrated on screen and starts with one story: *a customer's CSR worked on the old CA and fails after cutover.*
 1. `migrate-check`: which apps break on the new platform and why.
 2. `preflight`: the failing rule, the evidence, and the exact fix command.
