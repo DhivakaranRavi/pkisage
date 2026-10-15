@@ -10,7 +10,7 @@ All results come from local lab CAs run in podman. They show how real CAs behave
 
 ## Key finding: a CA's defaults are often looser than a company policy
 - **step-ca** rejected only 1 of 12 CSR variants (RSA 1024). It accepted a CSR with no SAN, P-521, SHA-1 signature and a client-auth EKU.
-- **EJBCA CE** with its default `ENDUSER` certificate profile accepted **all 5** test CSRs, including **RSA 512** and a CSR with no SAN. Key-size and SAN rules only exist if the certificate profile is configured to enforce them.
+- **EJBCA CE**: in this lab, with the default `ENDUSER` certificate profile and no profile changes, EJBCA accepted **all 5** test CSRs, including **RSA 512** and a CSR with no SAN. This describes the lab's default profile, not EJBCA's capabilities: EJBCA can enforce key-size and SAN rules, but only if the certificate profile is configured to, and real deployments use stricter profiles.
 - The example `corp-web` preflight policy flagged: RSA 1024 (`key-size`), RSA 512 (`key-size`, `san-present`), no SAN (`san-present`), P-521 (`curve`, `san-present`).
 
 So preflight is most valuable as a check of **your policy** before submission, since a lenient CA will not reject a request that your policy (or a later migration to a stricter CA) will.

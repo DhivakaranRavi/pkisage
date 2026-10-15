@@ -3,6 +3,8 @@
 A read-only helper for PKI operations teams. It checks certificate requests before they reach a CA, predicts which apps break in a CA migration, translates CA errors and logs into causes and fixes, and diagnoses support tickets (including in Jira) with verifiable evidence. AI is used only to classify and to word replies; deterministic checks decide the facts and a human approves anything customer-facing.
 
 > **Status: alpha (0.1.0).** Not production-hardened. It is not a CA and never changes a CA.
+>
+> **Evaluation caveat:** the labels behind the classifier numbers were assigned by an AI assistant and are not expert-reviewed, and the test data are documentation strings and public issue titles, not real tickets. See [docs/eval.md](docs/eval.md).
 
 ## Install
 ```
@@ -38,8 +40,8 @@ pkisage serve                                             # REST API (pip instal
 |---|---|
 | Preflight (10 rules), chain, OCSP, parsing | Tested; OCSP and chain also run live against github.com and microsoft.com; `cert` cross-checked with `openssl` and `step certificate inspect` |
 | Error library | 25 entries; **12 verified against real CAs** (step-ca, Pebble, EJBCA CE), 13 unverified. Output labels each. See [lab findings](docs/lab-findings.md). |
-| Lab | Podman lab with **step-ca**, **Pebble** and **EJBCA CE** (default profiles; EJBCA's default accepted even RSA 512). `lab/bench.py`: step-ca rejected 1 of 12 CSR variants and preflight flagged it; preflight also flagged 5 that step-ca accepts because the example `corp-web` policy is stricter. |
-| Classifier | See [docs/eval.md](docs/eval.md): on two frozen held-out sets (46 documentation strings, 44 real GitHub issue titles; each run once), Jev scored 71.7% and 81.8%, rules 63.0% and 59.1%. Pooled N=90: Jev 76.7% (95% CI 66.9-84.2) vs rules 61.1% (50.8-70.5); intervals overlap slightly, so the advantage is suggestive only. Development-set scores (98% / 86%) are optimistic and not the headline. Labels were assigned by the author's AI assistant, unreviewed ([labeling rules](docs/labeling.md)). Auto-routing is **off by default** (3 of 27 high-confidence results were wrong); set `PKISAGE_TRUST_AUTO=1` to enable. |
+| Lab | Podman lab with **step-ca**, **Pebble** and **EJBCA CE** (default profiles; in this lab EJBCA's default profile accepted even RSA 512, which says nothing about what a configured profile enforces). `lab/bench.py`: step-ca rejected 1 of 12 CSR variants and preflight flagged it; preflight also flagged 5 that step-ca accepts because the example `corp-web` policy is stricter. |
+| Classifier | Two frozen held-out sets (46 documentation strings, 44 GitHub issue titles). Paired re-run, pooled N=90: Jev 71/90 (78.9%) vs rules 55/90 (61.1%), McNemar p=0.026 (set 1 alone p=0.44, set 2 alone p=0.019); the first run gave Jev 69/90. Jev's answers vary by about one item between runs. Confidence is poorly calibrated on non-error text (0.91-1.00 on wrong answers), so auto-routing is **off by default** (`PKISAGE_TRUST_AUTO=1` enables). Development-set scores (98% / 86%) are optimistic. Labels are AI-assigned and unreviewed ([labeling](docs/labeling.md)). |
 | Migration | Demonstrated on generated sample CSRs only. |
 | Jira | Triage and ticket enrichment (label + comment). No SLA/KPI tracking. Tested live on a personal Jira site and with a mocked Jira in the test suite. |
 | CA adapters | ACME and step-ca verified in the lab. DigiCert and EJBCA clients are read-only and tested against fake servers only; `enroll-check` is derived from public docs. |

@@ -1,0 +1,32 @@
+{
+  "sets": {
+    "tests/data/heldout.jsonl": {
+      "n": 46,
+      "jev_correct": 34,
+      "rules_correct": 29,
+      "both": 18,
+      "jev_only": 16,
+      "rules_only": 11,
+      "neither": 1,
+      "mcnemar_p": 0.4421
+    },
+    "tests/data/heldout2.jsonl": {
+      "n": 44,
+      "jev_correct": 37,
+      "rules_correct": 26,
+      "both": 22,
+      "jev_only": 15,
+      "rules_only": 4,
+      "neither": 3,
+      "mcnemar_p": 0.0192
+    }
+  },
+  "pooled": {
+    "both": 40,
+    "jev_only": 31,
+    "rules_only": 15,
+    "neither": 4,
+    "n": 90,
+    "mcnemar_p": 0.0259
+  }
+}

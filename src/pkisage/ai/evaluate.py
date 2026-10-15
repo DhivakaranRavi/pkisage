@@ -36,6 +36,7 @@ class EvalResult(BaseModel):
     human_rate: float
     calibration: list[Bucket]
     failures: list[dict[str, str]]
+    items: list[dict[str, str | float | bool]] = []
 
 
 def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
@@ -69,9 +70,12 @@ def evaluate_model(model: DecisionModel, dataset: Path) -> EvalResult:
     bucket_n = [0] * len(BUCKETS)
     bucket_ok = [0] * len(BUCKETS)
     failures: list[dict[str, str]] = []
+    items: list[dict[str, str | float | bool]] = []
     for r in rows:
         d = model.classify(r["text"])
         good = d.category == ErrorCategory(r["label"])
+        items.append({"text": r["text"], "label": r["label"], "pred": d.category.value,
+                      "conf": round(d.confidence, 3), "correct": good})
         (ok_conf if good else bad_conf).append(d.confidence)
         band = "auto" if d.confidence >= HIGH else "unverified" if d.confidence >= LOW else "human"
         routes[band] += 1
@@ -108,4 +112,4 @@ def evaluate_model(model: DecisionModel, dataset: Path) -> EvalResult:
         calibration=[Bucket(label=labels[i], n=bucket_n[i],
                             accuracy=bucket_ok[i] / bucket_n[i] if bucket_n[i] else None)
                      for i in range(len(BUCKETS))],
-        failures=failures)
+        failures=failures, items=items)
