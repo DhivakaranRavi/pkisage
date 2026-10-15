@@ -1,0 +1,56 @@
+{"text": "Request rejected: Subject Alternative Name is required by profile", "label": "SAN_MISSING"}
+{"text": "CA says key length too short for this profile", "label": "KEY_TOO_WEAK"}
+{"text": "Extended key usage clientAuth not allowed", "label": "EKU_NOT_ALLOWED"}
+{"text": "Requested validity exceeds maximum allowed", "label": "VALIDITY_TOO_LONG"}
+{"text": "signature algorithm sha1 not allowed", "label": "SIG_ALG_REJECTED"}
+{"text": "PKIX path building failed: unable to find valid certification path", "label": "CHAIN_UNTRUSTED"}
+{"text": "CKR_PIN_INCORRECT while logging into crypto token", "label": "AUTH_FAILED"}
+{"text": "urn:ietf:params:acme:error:unauthorized challenge failed", "label": "VALIDATION_PENDING"}
+{"text": "java.security.cert.CertificateExpiredException: NotAfter", "label": "CERT_EXPIRED"}
+{"text": "the printer on floor 3 is jammed", "label": "UNKNOWN"}
+{"text": "No SAN in CSR, DNS name missing", "label": "SAN_MISSING"}
+{"text": "ejbca: no SAN supplied for request", "label": "SAN_MISSING"}
+{"text": "RSA key size 1024 below minimum", "label": "KEY_TOO_WEAK"}
+{"text": "weak key rejected by policy", "label": "KEY_TOO_WEAK"}
+{"text": "EKU clientAuth is invalid for this certificate profile", "label": "EKU_NOT_ALLOWED"}
+{"text": "validity period too long, maximum 397 days", "label": "VALIDITY_TOO_LONG"}
+{"text": "SHA-1 signature rejected by CA", "label": "SIG_ALG_REJECTED"}
+{"text": "unable to find valid certification path to requested target", "label": "CHAIN_UNTRUSTED"}
+{"text": "PKIX path validation failed, intermediate missing", "label": "CHAIN_UNTRUSTED"}
+{"text": "CKR_PIN_LOCKED on HSM slot", "label": "AUTH_FAILED"}
+{"text": "authentication failed: 403 not authorized for profile", "label": "AUTH_FAILED"}
+{"text": "domain validation pending, DCV not completed", "label": "VALIDATION_PENDING"}
+{"text": "certificate expired yesterday, CertificateExpiredException", "label": "CERT_EXPIRED"}
+{"text": "OCSP says certificate is revoked", "label": "REVOKED"}
+{"text": "certificate has been revoked by the CA", "label": "REVOKED"}
+{"text": "lunch menu for friday", "label": "UNKNOWN"}
+{"text": "VPN keeps disconnecting on my laptop", "label": "UNKNOWN"}
+{"text": "please reset my email password", "label": "UNKNOWN"}
+{"text": "the build server is out of disk space", "label": "UNKNOWN"}
+{"text": "request fails but no error message shown", "label": "UNKNOWN"}
+{"text": "the CSR does not contain a subjectAltName extension", "label": "SAN_MISSING"}
+{"text": "SAN is empty, CN only is not accepted", "label": "SAN_MISSING"}
+{"text": "RSA 2048 not allowed, need 3072 bits", "label": "KEY_TOO_WEAK"}
+{"text": "certificate request RSA key must be at least 2048 bits", "label": "KEY_TOO_WEAK"}
+{"text": "curve not permitted by policy, key too weak", "label": "KEY_TOO_WEAK"}
+{"text": "EKU serverAuth not in the permitted extended key usage list: invalid EKU", "label": "EKU_NOT_ALLOWED"}
+{"text": "validity maximum exceeded for this profile", "label": "VALIDITY_TOO_LONG"}
+{"text": "requested duration of 80000h is more than the authorized maximum certificate duration", "label": "VALIDITY_TOO_LONG"}
+{"text": "signature algorithm md5 rejected", "label": "SIG_ALG_REJECTED"}
+{"text": "java.security.cert.CertPathValidatorException: PKIX path validation failed", "label": "CHAIN_UNTRUSTED"}
+{"text": "incomplete chain: intermediate certificate missing", "label": "CHAIN_UNTRUSTED"}
+{"text": "Keystore was tampered with, or password was incorrect", "label": "AUTH_FAILED"}
+{"text": "401 unauthorized: invalid api key", "label": "AUTH_FAILED"}
+{"text": "failed to decrypt JWE: invalid password", "label": "AUTH_FAILED"}
+{"text": "domain validation pending for example.com", "label": "VALIDATION_PENDING"}
+{"text": "ACME challenge failed: unauthorized, DNS record not found", "label": "VALIDATION_PENDING"}
+{"text": "this certificate has expired, NotAfter in the past", "label": "CERT_EXPIRED"}
+{"text": "certificate expired 3 days ago", "label": "CERT_EXPIRED"}
+{"text": "serial number is in the CRL: certificate revoked", "label": "REVOKED"}
+{"text": "OCSP status: revoked", "label": "REVOKED"}
+{"text": "domain is on the CA blocklist: forbidden by policy rejectedIdentifier", "label": "POLICY_REJECTED"}
+{"text": "issuance forbidden by policy for this identifier", "label": "POLICY_REJECTED"}
+{"text": "the cafeteria is closed today", "label": "UNKNOWN"}
+{"text": "my monitor is flickering", "label": "UNKNOWN"}
+{"text": "meeting moved to 3pm", "label": "UNKNOWN"}
+{"text": "please approve my PTO", "label": "UNKNOWN"}

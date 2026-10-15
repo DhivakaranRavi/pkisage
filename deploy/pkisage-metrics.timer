@@ -1,0 +1,9 @@
+[Unit]
+Description=Refresh pkisage certificate expiry metrics hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

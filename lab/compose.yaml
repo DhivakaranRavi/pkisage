@@ -1,0 +1,16 @@
+services:
+  step-ca:
+    image: docker.io/smallstep/step-ca:latest
+    container_name: pkisage-step-ca
+    ports:
+      - "9000:9000"
+    environment:
+      DOCKER_STEPCA_INIT_NAME: "pkisage Lab CA"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "localhost,127.0.0.1"
+      DOCKER_STEPCA_INIT_PROVISIONER_NAME: "admin"
+      DOCKER_STEPCA_INIT_PASSWORD: "lab-only-password"
+      DOCKER_STEPCA_INIT_ACME: "true"
+    volumes:
+      - step-data:/home/step
+volumes:
+  step-data:

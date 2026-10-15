@@ -1,0 +1,8 @@
+name: new-platform
+allowed_key_types: [RSA, EC]
+min_rsa_bits: 3072
+allowed_curves: [secp256r1, secp384r1]
+san_required: true
+allowed_ekus: [serverAuth]
+max_validity_days: 397
+allowed_sig_algs: [sha256, sha384, sha512]

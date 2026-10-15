@@ -1,0 +1,21 @@
+# Illustrative patterns; verify against vendor docs and real responses.
+- id: digicert-validation-pending
+  pattern: "(?i)(domain|organization).*(validation|not validated)|pending validation"
+  category: VALIDATION_PENDING
+  cause: Domain or organization validation has not completed.
+  fix: Complete DCV for the domain in the CA portal, then resubmit.
+- id: digicert-san-missing
+  pattern: "(?i)(common name|san|dns name).*(missing|required|invalid)"
+  category: SAN_MISSING
+  cause: The request lacks a valid SAN/common name for the validated domains.
+  fix: Include a SAN entry matching a validated domain.
+- id: digicert-key-weak
+  pattern: "(?i)(rsa )?key.*(at least|minimum|too small|2048)"
+  category: KEY_TOO_WEAK
+  cause: The public key does not meet the minimum size.
+  fix: Generate a key that meets the minimum and a new CSR.
+- id: digicert-auth
+  pattern: "(?i)(invalid|missing) api key|access_denied|unauthorized|401"
+  category: AUTH_FAILED
+  cause: API key missing, invalid, or lacking permission.
+  fix: Verify the API key and its role/permissions.

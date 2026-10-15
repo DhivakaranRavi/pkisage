@@ -1,0 +1,8 @@
+name: old-platform
+allowed_key_types: [RSA, EC]
+min_rsa_bits: 2048
+allowed_curves: [secp256r1, secp384r1]
+san_required: false
+allowed_ekus: [serverAuth, clientAuth]
+max_validity_days: 825
+allowed_sig_algs: [sha1, sha256, sha384, sha512]

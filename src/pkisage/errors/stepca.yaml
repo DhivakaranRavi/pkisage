@@ -1,0 +1,19 @@
+# Verified against smallstep step-ca (container smallstep/step-ca:latest), October 2026.
+- id: stepca-rsa-key-small
+  pattern: "RSA key must be at least \\d+ bits"
+  category: KEY_TOO_WEAK
+  cause: The CSR's RSA key is below the CA's minimum (2048 bits).
+  fix: Generate a new key of at least 2048 bits (3072 recommended) and a new CSR.
+  verified_against: step-ca-latest
+- id: stepca-duration-exceeded
+  pattern: "requested duration of .* is more than the authorized maximum certificate duration"
+  category: VALIDITY_TOO_LONG
+  cause: Requested lifetime exceeds the provisioner's maximum certificate duration.
+  fix: Request a shorter lifetime (--not-after) or ask the CA admin to raise the provisioner maximum.
+  verified_against: step-ca-latest
+- id: stepca-bad-password
+  pattern: "failed to decrypt JWE: invalid password"
+  category: AUTH_FAILED
+  cause: The provisioner password is wrong, so the one-time token could not be created.
+  fix: Use the correct provisioner password or token.
+  verified_against: step-ca-latest

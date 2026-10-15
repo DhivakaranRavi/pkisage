@@ -1,0 +1,7 @@
+title = "pkisage"
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Fake secrets used to test that redaction works"
+paths = ['''tests/test_hardening\.py''']

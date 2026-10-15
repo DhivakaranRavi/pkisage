@@ -1,0 +1,6 @@
+[Unit]
+Description=pkisage certificate expiry metrics (Prometheus text format)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/opt/pkisage/bin/pkisage metrics /etc/pki/tls/certs > /var/lib/node_exporter/textfile_collector/pkisage.prom.tmp && mv /var/lib/node_exporter/textfile_collector/pkisage.prom.tmp /var/lib/node_exporter/textfile_collector/pkisage.prom'

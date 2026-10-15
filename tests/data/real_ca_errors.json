@@ -1,0 +1,38 @@
+[
+ {
+  "ca": "acme",
+  "text": "urn:ietf:params:acme:error:unauthorized: Order includes different number of DNSnames identifiers than CSR specifies",
+  "category": "SAN_MISSING",
+  "source": "pebble-2.10.1"
+ },
+ {
+  "ca": "acme",
+  "text": "urn:ietf:params:acme:error:rejectedIdentifier: Order included an identifier for which issuance is forbidden by policy: \"blocked-domain.example\"",
+  "category": "POLICY_REJECTED",
+  "source": "pebble-2.10.1"
+ },
+ {
+  "ca": "acme",
+  "text": "urn:ietf:params:acme:error:badNonce: JWS has an invalid anti-replay nonce: DV2y8kkvVRQF4E1lv9YhJQ",
+  "category": "UNKNOWN",
+  "source": "pebble-2.10.1"
+ },
+ {
+  "ca": "stepca",
+  "text": "The request was forbidden by the certificate authority: certificate request RSA key must be at least 2048 bits (256 bytes).",
+  "category": "KEY_TOO_WEAK",
+  "source": "step-ca-latest"
+ },
+ {
+  "ca": "stepca",
+  "text": "The request was forbidden by the certificate authority: requested duration of 80000h1m0s is more than the authorized maximum certificate duration of 24h1m0s.",
+  "category": "VALIDITY_TOO_LONG",
+  "source": "step-ca-latest"
+ },
+ {
+  "ca": "stepca",
+  "text": "failed to decrypt JWE: invalid password",
+  "category": "AUTH_FAILED",
+  "source": "step-ca-latest"
+ }
+]

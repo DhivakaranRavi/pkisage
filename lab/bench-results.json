@@ -1,0 +1,124 @@
+{
+ "summary": {
+  "variants": 12,
+  "ca_rejected": 1,
+  "ca_rejected_caught_by_preflight": 1,
+  "catch_rate": 1.0,
+  "accepted_by_ca_but_flagged_by_policy": 5,
+  "mean_preflight_ms": 1.6
+ },
+ "rows": [
+  {
+   "variant": "rsa1024+san",
+   "ca_rejected": true,
+   "ca_message": "The request was forbidden by the certificate authority: certificate request RSA key must be at least 2048 bits (256 byte",
+   "explained": [
+    "KEY_TOO_WEAK"
+   ],
+   "preflight_fail_rules": [
+    "key-size"
+   ],
+   "preflight_ms": 7.4
+  },
+  {
+   "variant": "rsa2048+san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa2048+san.crt",
+   "explained": [],
+   "preflight_fail_rules": [],
+   "preflight_ms": 0.3
+  },
+  {
+   "variant": "rsa3072+san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa3072+san.crt",
+   "explained": [],
+   "preflight_fail_rules": [],
+   "preflight_ms": 0.3
+  },
+  {
+   "variant": "rsa3072-nosan",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa3072-nosan.crt",
+   "explained": [],
+   "preflight_fail_rules": [
+    "san-present"
+   ],
+   "preflight_ms": 0.3
+  },
+  {
+   "variant": "ec-p256+san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/ec-p256+san.crt",
+   "explained": [],
+   "preflight_fail_rules": [],
+   "preflight_ms": 6.7
+  },
+  {
+   "variant": "ec-p384+san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/ec-p384+san.crt",
+   "explained": [],
+   "preflight_fail_rules": [],
+   "preflight_ms": 0.9
+  },
+  {
+   "variant": "ec-p521+san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/ec-p521+san.crt",
+   "explained": [],
+   "preflight_fail_rules": [
+    "curve"
+   ],
+   "preflight_ms": 0.6
+  },
+  {
+   "variant": "rsa3072-sha512",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa3072-sha512.crt",
+   "explained": [],
+   "preflight_fail_rules": [],
+   "preflight_ms": 0.4
+  },
+  {
+   "variant": "rsa3072-sha1",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa3072-sha1.crt",
+   "explained": [],
+   "preflight_fail_rules": [
+    "sig-alg",
+    "csr-signature"
+   ],
+   "preflight_ms": 0.3
+  },
+  {
+   "variant": "rsa3072-clientauth-eku",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa3072-clientauth-eku.crt",
+   "explained": [],
+   "preflight_fail_rules": [
+    "eku-allowed"
+   ],
+   "preflight_ms": 0.4
+  },
+  {
+   "variant": "rsa3072-ip-only-san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/rsa3072-ip-only-san.crt",
+   "explained": [],
+   "preflight_fail_rules": [],
+   "preflight_ms": 0.4
+  },
+  {
+   "variant": "ed25519+san",
+   "ca_rejected": false,
+   "ca_message": "\u001b[32m\u001b[32m\u2714\u001b[0m \u001b[1mCertificate\u001b[0m\u001b[1m:\u001b[0m /tmp/b/ed25519+san.crt",
+   "explained": [],
+   "preflight_fail_rules": [
+    "key-type",
+    "sig-alg"
+   ],
+   "preflight_ms": 0.9
+  }
+ ]
+}

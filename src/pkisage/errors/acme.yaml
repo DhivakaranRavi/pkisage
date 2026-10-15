@@ -1,0 +1,34 @@
+# Problem types from RFC 8555 section 6.7.
+- id: acme-identifier-mismatch
+  pattern: "different number of DNSnames identifiers than CSR|CSR.*(identifiers|names).*(do not match|mismatch)"
+  category: SAN_MISSING
+  cause: The CSR's DNS names do not match the order identifiers (typically a CSR with no DNS SAN, or SAN only with IPs).
+  fix: Regenerate the CSR with DNS SAN entries that exactly match the order's identifiers.
+  verified_against: pebble-2.10.1
+- id: acme-forbidden-identifier
+  pattern: "acme:error:rejectedIdentifier|forbidden by policy|is a forbidden domain"
+  category: POLICY_REJECTED
+  cause: CA policy (e.g. blocklist) forbids issuing for this identifier.
+  fix: Use an identifier permitted by the CA policy, or ask the CA admin to review the policy.
+  verified_against: pebble-2.10.1
+- id: acme-bad-nonce
+  pattern: "acme:error:badNonce"
+  category: UNKNOWN
+  cause: Anti-replay nonce was stale or reused. Clients must retry with the nonce from the error response.
+  fix: Retry the request with a fresh nonce (RFC 8555 section 6.5).
+  verified_against: pebble-2.10.1
+- id: acme-unauthorized
+  pattern: "(?s)^(?!.*identifiers than CSR).*urn:ietf:params:acme:error:unauthorized"
+  category: VALIDATION_PENDING
+  cause: Challenge validation failed or identifier is not authorized.
+  fix: Ensure the HTTP-01/DNS-01 challenge response is reachable and correct, then retry.
+- id: acme-bad-csr
+  pattern: "urn:ietf:params:acme:error:badCSR"
+  category: SAN_MISSING
+  cause: The CSR is rejected (often missing/mismatched identifiers or weak key).
+  fix: Run `pkisage preflight` on the CSR and match identifiers to the order.
+- id: acme-bad-sig-alg
+  pattern: "urn:ietf:params:acme:error:badSignatureAlgorithm"
+  category: SIG_ALG_REJECTED
+  cause: The signature algorithm is not supported.
+  fix: Use an algorithm listed by the server.

@@ -1,0 +1,14 @@
+.env
+model.md
+ai-thought.md
+jira-troubleshoot.md
+plan.md
+.venv/
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+lab/bin/
+lab/certs/
+dist/

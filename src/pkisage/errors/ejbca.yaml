@@ -1,0 +1,31 @@
+# Illustrative patterns; verify against your CA's real messages before relying on them.
+- id: ejbca-san-missing
+  pattern: "(?i)subject alternative name.*(missing|required)|no SAN"
+  category: SAN_MISSING
+  cause: The request has no subjectAltName extension but the profile requires one.
+  fix: Regenerate the CSR with a SAN, e.g. openssl req -new -key k.pem -addext "subjectAltName=DNS:host.example.com".
+- id: ejbca-key-weak
+  pattern: "(?i)key (length|size).*(too (short|small)|not allowed|minimum)|weak key"
+  category: KEY_TOO_WEAK
+  cause: The public key is smaller than the profile minimum.
+  fix: Generate a larger key (RSA 3072+ or EC P-256/P-384) and a new CSR.
+- id: ejbca-eku
+  pattern: "(?i)extended key usage.*(not allowed|invalid)|EKU"
+  category: EKU_NOT_ALLOWED
+  cause: The requested extended key usage is not permitted by the certificate profile.
+  fix: Remove the disallowed EKU from the request or use a profile that permits it.
+- id: ejbca-validity
+  pattern: "(?i)validity.*(exceed|too long|maximum)"
+  category: VALIDITY_TOO_LONG
+  cause: Requested validity exceeds the profile maximum.
+  fix: Request a shorter validity period.
+- id: ejbca-sigalg
+  pattern: "(?i)signature algorithm.*(not (allowed|supported)|rejected)|sha-?1"
+  category: SIG_ALG_REJECTED
+  cause: The CSR is signed with an algorithm the profile rejects.
+  fix: Re-sign the CSR with SHA-256 or stronger (openssl req -new -sha256 ...).
+- id: ejbca-auth
+  pattern: "(?i)(authorization|authentication) (failed|denied)|not authorized|403"
+  category: AUTH_FAILED
+  cause: The client credential or role lacks access to the profile or CA.
+  fix: Check the client certificate / API token and role access rules.
