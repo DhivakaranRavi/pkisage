@@ -1,12 +1,15 @@
 # Showcase guide
 
 ## 3-minute walkthrough (for a reviewer or interviewer)
-Run `./demo.sh` (about a minute). It tells one story: *a customer's CSR worked on the old CA and fails after cutover.*
+Run `./demo.sh` (about 3 minutes; `./demo.sh --quick` is the 1-minute migration story). It is narrated on screen and starts with one story: *a customer's CSR worked on the old CA and fails after cutover.*
 1. `migrate-check`: which apps break on the new platform and why.
 2. `preflight`: the failing rule, the evidence, and the exact fix command.
-3. `explain`: the CA's raw error translated into a cause and fix, labeled verified / unverified.
-4. `diagnose`: root cause, evidence, fix, confidence (`verified: true` only when backed by deterministic checks).
-5. `reply`: a customer message drafted from verified facts only; a human approves it.
+3. `explain` and `diagnose`: the CA's raw error translated into a cause and fix, then root cause, evidence and confidence (`verified` only when backed by deterministic checks).
+4. `cert` and the PQC flag on a real certificate (github.com).
+5. `chain` (complete vs missing intermediate) and a live `ocsp` query.
+6. `metrics`: expiry in Prometheus format.
+7. `log`: HSM (PKCS#11) and Tomcat PKIX errors.
+8. `triage` and `reply`: AI used carefully, with a human approving the draft.
 
 Then show the real-CA evidence: `docs/lab-findings.md` (what step-ca, EJBCA CE and Pebble actually did) and `tests/data/real_ca_errors.json`.
 

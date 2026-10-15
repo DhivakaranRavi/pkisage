@@ -33,24 +33,7 @@ pkisage acme-probe r.csr --directory https://127.0.0.1:14000/dir --insecure   # 
 pkisage ai-eval tests/data/heldout.jsonl --heldout --model jev
 pkisage serve                                             # REST API (pip install '.[api]')
 ```
-`./demo.sh` runs the one-minute story end to end.
-
-## PKI knowledge this project demonstrates
-| PKI topic | Where it shows up | How it was verified |
-|---|---|---|
-| X.509 structure: key type/size, SAN, EKU, key usage, validity, signature algorithm, basic constraints, AIA/CRL | `cert`, `preflight`, `checks/parse.py` | Cross-checked against `openssl x509` and `step certificate inspect` |
-| Certificate profiles and issuance policy (what a CA accepts vs what your policy requires) | YAML profiles, `preflight`, `migrate-check` | Real CAs (step-ca, EJBCA CE) accepted CSRs a policy rejects, including RSA 512 ([lab findings](docs/lab-findings.md)) |
-| Chain building and trust anchors, missing intermediates | `chain` | Live against github.com and microsoft.com |
-| Revocation: OCSP and CRL | `ocsp`, `metrics` | Live OCSP `GOOD` from real responders |
-| CA migration planning (old vs new platform rules) | `migrate-check`, `demo.sh` | Generated sample CSRs; per-app OK / BREAKS verdicts |
-| ACME (RFC 8555): orders, challenges, problem types | `adapters/acme.py`, `acme-probe` | Run against a local Pebble CA; real `badNonce`, `rejectedIdentifier`, identifier-mismatch errors captured |
-| Private CAs and enrollment: step-ca provisioners, EJBCA end entities and certificate profiles | `lab/`, error library | 12 error entries reproduced on real CAs, each with the raw message as a test fixture |
-| CA/RA/HSM operations knowledge in logs (PKCS#11 errors, Tomcat PKIX, OCSP) | `log` | Pattern-tested; PKCS#11 `CKR_*` codes covered |
-| Post-quantum readiness | `preflight` PQC warning (NIST IR 8547), `metrics` | Unit-tested |
-| Monitoring certificate lifetimes | `metrics` (Prometheus text format) | Scraped over HTTP; systemd unit run on Rocky Linux 9 |
-| Operating on RHEL-family systems | `docs/rhel.md`, `deploy/` | Installed and run on Rocky Linux 9.8 in podman |
-
-See [docs/showcase.md](docs/showcase.md) for a 3-minute walkthrough and talking points.
+`./demo.sh` is a live, narrated demonstration (about 3 minutes); `./demo.sh --quick` runs the short migration story only. See [docs/showcase.md](docs/showcase.md).
 
 ## What is verified, and what is not
 | Area | Status |
