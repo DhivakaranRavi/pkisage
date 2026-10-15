@@ -85,4 +85,4 @@ Redaction before any external call (tested); suspected prompt injection is never
 `lab/up.sh` (Pebble ACME test CA), `lab/stepca-up.sh` (step-ca in podman; run `podman machine start` first), `lab/ejbca-up.sh` (EJBCA CE; needs `podman machine set --memory 6144`), `lab/bench.py`. Lab CAs are for testing only (default settings, lab password, `--insecure` TLS); enterprises should test against a production-like non-production CA.
 
 ## License
-Apache-2.0. See [LICENSE](LICENSE).
+Copyright 2026 Dhivakaran Ravi. Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).

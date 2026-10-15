@@ -28,4 +28,4 @@ Then show the real-CA evidence: `docs/lab-findings.md` (what step-ca, EJBCA CE a
 - "What would you do differently in production?" A non-production CA that mirrors production profiles, secrets in a vault, HSM-backed keys, expert-reviewed labels, and real (anonymized) tickets for evaluation.
 
 ## Before sharing publicly
-Rotate any keys that were ever pasted anywhere, keep `.env` and notes files out of git, and make sure nothing came from an employer's systems or data. Verify the claims in the README table still match what you can demonstrate live.
+Rotate any keys that were ever pasted anywhere, and keep `.env` and notes files out of git. Verify the claims in the README table still match what you can demonstrate live.
