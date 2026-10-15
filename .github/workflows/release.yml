@@ -18,7 +18,7 @@ jobs:
           python-version: "3.12"
       - run: pip install build cyclonedx-bom && python -m build
       - run: pip install . && cyclonedx-py environment -o sbom.cdx.json
-      - uses: sigstore/gh-action-sigstore-python@v3.0.0
+      - uses: sigstore/gh-action-sigstore-python@v3.5.0
         with:
           inputs: dist/*
       - uses: pypa/gh-action-pypi-publish@release/v1
