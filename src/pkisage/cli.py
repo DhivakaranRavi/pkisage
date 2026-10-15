@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Annotated
 
@@ -420,7 +421,25 @@ def reply(report: Annotated[Path, typer.Option("--from")]) -> None:
     typer.echo("\n[DRAFT - requires human approval before sending]")
 
 
+BANNER = r"""
+         _    _     _
+  _ __  | | _(_)___  __ _  __ _  ___
+ | '_ \ | |/ / / __|/ _` |/ _` |/ _ \
+ | |_) ||   <| \__ \ (_| | (_| |  __/
+ | .__/ |_|\_\_|___/\__,_|\__, |\___|
+ |_|                      |___/
+   read-only PKI diagnostics, migration checks & ticket triage
+"""
+
+
+def show_banner(argv: list[str]) -> None:
+    """Banner only for bare `pkisage` or top-level --help, and only on a terminal."""
+    if sys.stdout.isatty() and (not argv or argv in (["--help"], ["-h"])):
+        console.print(BANNER, style="bold cyan", markup=False, highlight=False)
+
+
 def run() -> None:
+    show_banner(sys.argv[1:])
     try:
         app()
     except (ValueError, OSError) as e:

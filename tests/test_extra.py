@@ -5,6 +5,7 @@ import subprocess
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
+import pytest
 from fastapi.testclient import TestClient
 
 from pkisage.adapters.rest import DigiCertAdapter, EjbcaAdapter
@@ -202,3 +203,20 @@ def test_extract_json_variants() -> None:
     assert extract_json('{"sentences": [{"text": "a", "cites": [1]}]}') == [{"text": "a", "cites": [1]}]
     assert extract_json('```json\n[{"text": "a", "cites": [1]}]\n```') == [{"text": "a", "cites": [1]}]
     assert extract_json("not json") is None
+
+
+def test_banner_only_on_terminal_for_bare_or_help(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
+    import sys
+
+    from pkisage import cli
+
+    monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
+    cli.show_banner([])
+    assert "read-only PKI diagnostics" in capsys.readouterr().out
+    cli.show_banner(["--help"])
+    assert "read-only PKI diagnostics" in capsys.readouterr().out
+    cli.show_banner(["preflight", "x.csr", "--json"])
+    assert capsys.readouterr().out == ""
+    monkeypatch.setattr(sys.stdout, "isatty", lambda: False)
+    cli.show_banner([])
+    assert capsys.readouterr().out == ""
